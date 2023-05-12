@@ -21,6 +21,9 @@ cargo build --release
 cp target/release/passcraft ~/.local/bin/
 ```
 
+## Todo
+- [ ] Convert all the inputs taken from user to lowercase before doing anything else.
+
 ## Author
 
 - [**Gaurav Raj**](https://thehackersbrain.github.io/)
