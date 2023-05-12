@@ -21,7 +21,5 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions-rs/upload-release@v1
         with:
-          github_token: ${{ secrets.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 }}
-          release_name: ${{ github.event.release.name }}
-          artifact_paths: target/release/passcraft
-          artifact_name: passcraft
+          name: passcraft
+          path: target/release/passcraft
