@@ -4,13 +4,15 @@ use colored::Colorize;
 mod config;
 mod wordlist;
 mod munge;
+mod banner;
 
 use wordlist::*;
 use munge::*;
+use banner::*;
 
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None, arg_required_else_help = true)]
 struct Args {
     #[arg(short, long)]
     input: bool,
@@ -31,6 +33,8 @@ fn main() {
     let interactive: bool = args.input;
     let munge: bool = args.munge;
     let wordlist: String = args.wordlist;
+
+    banner_p();
 
     if interactive {
             let output: String = args.output;
@@ -56,8 +60,6 @@ fn main() {
             } else {
                 println!("[{}] Specify the wordlist file...", "+".bold().red())
             }
-    } else {
-        println!("Help....");
     }
 }
 
