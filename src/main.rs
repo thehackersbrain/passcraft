@@ -2,6 +2,7 @@ use clap::Parser;
 
 mod config;
 mod wordlist;
+mod munge;
 
 use wordlist::*;
 
@@ -27,5 +28,6 @@ fn main() {
     } else {
         println!("Help...");
     }
+
 }
 

@@ -228,6 +228,7 @@ version = "1.0.8"
 dependencies = [
  "clap",
  "colored",
+ "lazy_static",
 ]
 
 [[package]]

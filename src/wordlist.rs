@@ -4,6 +4,7 @@ use std::collections::{HashMap, HashSet};
 use colored::Colorize;
 
 use crate::config::*;
+use crate::munge::*;
 
 // Function for taking input from the user
 pub fn input_prompt(prompt: &str) -> String {
@@ -131,9 +132,14 @@ pub fn profile_data() -> HashMap<String, String> {
         "y" => String::from("true"),
         _ => String::from("false"),
     };
+    let leet = match input_prompt("Add Leet Characters in wordlist [y/N]: ").to_lowercase().as_str() {
+        "y" => String::from("true"),
+        _ => String::from("false"),
+    };
 
     profile.insert(String::from("spec"), spec);
     profile.insert(String::from("randnum"), randnum);
+    profile.insert(String::from("leet"), leet);
 
     profile
 }
@@ -552,7 +558,14 @@ pub fn generate_wordlists(output: String) {
             .cloned(),
     );
 
-    let unique_lista: Vec<String> = uniqlist.iter().cloned().collect();
+    // Convert the wordlist into leet characters
+    let mut leet_wordlist: Vec<String> = Vec::new();
+    if profile.get("leet").map(|s| s == "true").unwrap_or(false) {
+        leet_wordlist = leet_speak(uniqlist.iter().cloned().collect());
+    }
+
+    let mut unique_lista: Vec<String> = uniqlist.iter().cloned().collect();
+    unique_lista.extend(leet_wordlist);
     let mut unique_list_finished: Vec<String> = Vec::new();
 
     for i in &unique_lista {
@@ -562,7 +575,6 @@ pub fn generate_wordlists(output: String) {
     }
 
     // Writing data into the output file.
-    // match write_to_file("wordlist.txt", &unique_list_finished) {
     match write_to_file(&output, &unique_list_finished) {
         Ok(()) => println!("\n[{}] {}\t({} words)", "+"
                 .bold()
