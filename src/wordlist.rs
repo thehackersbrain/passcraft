@@ -11,7 +11,7 @@ pub fn input_prompt(prompt: &str) -> String {
     print!("{}", prompt);
     io::stdout().flush().expect("Failed to flush the stdout!");
     io::stdin().read_line(&mut input).expect("Failed to read input!");
-    input.trim().to_string()
+    input.trim().to_string().to_lowercase()
 }
 
 // Function to write the generated wordlist in a file
