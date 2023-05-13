@@ -15,7 +15,7 @@ use banner::*;
 #[command(author, version, about, long_about = None, arg_required_else_help = true)]
 struct Args {
     #[arg(short, long)]
-    input: bool,
+    interactive: bool,
 
     #[arg(short, long)]
     munge: bool,
@@ -30,7 +30,7 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let interactive: bool = args.input;
+    let interactive: bool = args.interactive;
     let munge: bool = args.munge;
     let wordlist: String = args.wordlist;
 
