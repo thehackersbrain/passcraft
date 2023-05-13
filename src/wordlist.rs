@@ -1,4 +1,4 @@
-use std::io::{self, Write};
+use std::io::{self, Write, BufRead, BufReader, Error};
 use std::fs::File;
 use std::collections::{HashMap, HashSet};
 use colored::Colorize;
@@ -6,8 +6,16 @@ use colored::Colorize;
 use crate::config::*;
 use crate::munge::*;
 
+// Function to read the wordlist
+pub fn read_wordlist(filename: &str) -> Result<Vec<String>, Error> {
+    let file = File::open(filename)?;
+    let reader = BufReader::new(file);
+    let wordlist: Result<Vec<String>, Error> = reader.lines().collect();
+    wordlist
+}
+
 // Function for taking input from the user
-pub fn input_prompt(prompt: &str) -> String {
+fn input_prompt(prompt: &str) -> String {
     let mut input = String::new();
     print!("{}", prompt);
     io::stdout().flush().expect("Failed to flush the stdout!");
@@ -26,7 +34,7 @@ pub fn write_to_file(filename: &str, data: &[String]) -> std::io::Result<()> {
 }
 
 // Function to capitalize the first letter of any word
-pub fn capitalize(s: &str) -> String {
+fn capitalize(s: &str) -> String {
     if let Some(c) = s.chars().next() {
         let first_letter = c.to_uppercase();
         let remaining_letters = s.chars().skip(1).collect::<String>();
